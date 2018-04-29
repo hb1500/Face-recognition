@@ -48,8 +48,8 @@ class TripletFaceDataset(datasets.ImageFolder):
                 n3 = 0
             else:
                 n3 = np.random.randint(0, len(indices[c2]) - 1)
-
             triplets.append([indices[c1][n1], indices[c1][n2], indices[c2][n3],c1,c2])
+
         return triplets
 
     def __getitem__(self, index):

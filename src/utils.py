@@ -44,15 +44,19 @@ def display_triplet_distance(model,train_loader,name):
             print("ERROR at: {}".format(batch_idx))
             break
 
-        print("Distance (anchor-positive): {}".format(l2_dist.forward(out_a,out_p).data[0][0]))
-        print("Distance (anchor-negative): {}".format(l2_dist.forward(out_a,out_n).data[0][0]))
-
+        #print("Distance (anchor-positive): {}".format(l2_dist.forward(out_a,out_p).data[0][0]))
+        #print("Distance (anchor-negative): {}".format(l2_dist.forward(out_a,out_n).data[0][0]))
+        print("Distance (anchor-positive): {}".format(l2_dist.forward(out_a,out_p).data[0]))
+        print("Distance (anchor-negative): {}".format(l2_dist.forward(out_a,out_n).data[0]))
 
         axarr[0].imshow(denormalize(data_a[0]))
         axarr[1].imshow(denormalize(data_p[0]))
         axarr[2].imshow(denormalize(data_n[0]))
-        axarr[0].set_title("Distance (anchor-positive): {}".format(l2_dist.forward(out_a,out_p).data[0][0]))
-        axarr[2].set_title("Distance (anchor-negative): {}".format(l2_dist.forward(out_a,out_n).data[0][0]))
+#         axarr[0].set_title("Distance (anchor-positive): {}".format(l2_dist.forward(out_a,out_p).data[0][0]))
+#         axarr[2].set_title("Distance (anchor-negative): {}".format(l2_dist.forward(out_a,out_n).data[0][0]))
+        axarr[0].set_title("Distance (anchor-positive): {}".format(l2_dist.forward(out_a,out_p).data[0]))
+        axarr[2].set_title("Distance (anchor-negative): {}".format(l2_dist.forward(out_a,out_n).data[0]))
+
 
         break
     f.savefig("{}.png".format(name))
@@ -92,7 +96,8 @@ def display_triplet_distance_test(model,test_loader,name):
                     if label[rand_index] == 0:
                         break
 
-            distance = l2_dist.forward(out_a,out_n).data[rand_index][0]
+            #distance = l2_dist.forward(out_a,out_n).data[rand_index][0]
+            distance = l2_dist.forward(out_a,out_n).data[rand_index]
             print("Distance: {}".format(distance))
             #distance_pca = l2_dist.forward(PCA(128).fit_transform(out_a.data[i].cpu().numpy()),PCA(128).fit_transform(out_n.data[i].cpu().numpy())).data[0]
             #print("Distance(PCA): {}".format(distance_pca))
