@@ -101,7 +101,7 @@ parser.add_argument('--batch-k', type=int, default=4,
                     help='number of images per class in a batch. default is 5.')
 parser.add_argument('--gpus', type=str, default='4',
                     help='list of gpus to use, e.g. 0 or 0,2,5. empty means using cpu.')
-parser.add_argument('--epochs', type=int, default=20,
+parser.add_argument('--epochs', type=int, default=50,
                     help='number of training epochs. default is 20.')
 parser.add_argument('--optimizer', type=str, default='adam',
                     help='optimizer. default is adam.')
