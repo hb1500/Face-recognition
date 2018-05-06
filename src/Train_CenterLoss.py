@@ -80,22 +80,6 @@ parser.add_argument('--log-interval', type=int, default=10, metavar='LI',
 
 args = parser.parse_args(args = [])
 
-os.environ['CUDA_VISIBLE_DEVICES'] = args.gpu_id
-
-args.cuda = not args.no_cuda and torch.cuda.is_available()
-np.random.seed(args.seed)
-
-if not os.path.exists(args.log_dir):
-    os.makedirs(args.log_dir)
-
-if args.cuda:
-    cudnn.benchmark = True
-
-LOG_DIR = args.log_dir + '/run-optim_{}-lr{}-wd{}-embeddings{}-center_loss{}-MSCeleb'.format(args.optimizer, args.lr, args.wd,args.embedding_size,args.center_loss_weight)
-LOG_DIR_LOG = args.log_dir + '/logger'
-
-
-
 # set the device to use by setting CUDA_VISIBLE_DEVICES env variable in
 # order to prevent any memory allocation on unused GPUs
 os.environ['CUDA_VISIBLE_DEVICES'] = args.gpu_id
@@ -132,7 +116,7 @@ testacc_dir = ImageFolder(args.testdataroot,transform=transform)
 #    batch_size=args.batch_size, shuffle=True, **kwargs)
 train_loader = torch.utils.data.DataLoader(
     TrainDataset(dir=args.dataroot,transform=transform),
-    batch_size=args.batch_size, shuffle=False, **kwargs)
+    batch_size=args.batch_size, shuffle=True, **kwargs)
 testaccuracy_loader = torch.utils.data.DataLoader(testacc_dir,
     batch_size=args.batch_size, shuffle=True, **kwargs)
 
