@@ -13,16 +13,17 @@ class TripletFaceDataset(datasets.ImageFolder):
         self.n_triplets = n_triplets
 
         print('Generating {} triplets'.format(self.n_triplets))
-        self.training_triplets = self.generate_triplets(self.imgs, self.n_triplets,len(self.classes))
+        self.training_triplets = self.generate_triplets(self.imgs, self.n_triplets,6400)
 
     @staticmethod
     def generate_triplets(imgs, num_triplets,n_classes):
         def create_indices(_imgs):
             inds = dict()
             for idx, (img_path,label) in enumerate(_imgs):
-                if label not in inds:
-                    inds[label] = []
-                inds[label].append(img_path)
+                reallabel = label % 6400
+                if reallabel not in inds:
+                    inds[reallabel] = []
+                inds[reallabel].append(img_path)
             return inds
 
         triplets = []
@@ -51,6 +52,7 @@ class TripletFaceDataset(datasets.ImageFolder):
             triplets.append([indices[c1][n1], indices[c1][n2], indices[c2][n3],c1,c2])
 
         return triplets
+#         return indices
 
     def __getitem__(self, index):
         '''
@@ -72,10 +74,12 @@ class TripletFaceDataset(datasets.ImageFolder):
 
         # Get the index of each image in the triplet
         a, p, n,c1,c2 = self.training_triplets[index]
+#         indices = self.training_triplets[index]
 
         # transform images if required
         img_a, img_p, img_n = transform(a), transform(p), transform(n)
         return img_a, img_p, img_n,c1,c2
+#         return indices
 
     def __len__(self):
         return len(self.training_triplets)
