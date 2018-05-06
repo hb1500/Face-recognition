@@ -8,7 +8,7 @@ class TrainDataset(datasets.ImageFolder):
     '''
     def __init__(self, dir, transform=None):
 
-        super(testDataset, self).__init__(dir,transform)
+        super(TrainDataset, self).__init__(dir,transform)
         self.validation_images = self.get_paths(dir)
         self.transform = transform
 
