@@ -1,1 +1,1 @@
-# Face-recognition
+# Deep Learning for Face Recognition
